@@ -1,72 +1,116 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guess the Number Game By Maruf</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
     <div class="background-pattern"></div>
-
+    
     <div class="container">
-      <div class="game-header">
-        <h1>GUESS THE NUMBER</h1>
-        <div class="creator">By Maruf</div>
-      </div>
-
-      <div id="welcomeScreen" class="screen active">
-        <div class="range-display">1 - 100</div>
-        <p class="instruction">
-          I'm thinking of a number between 1 and 100.<br />Can you guess it?
-        </p>
-        <button id="startBtn" class="btn-primary">Start Game</button>
-      </div>
-
-      <div id="gameScreen" class="screen">
-        <div class="stats">
-          <div class="stat-box">
-            <div class="stat-label">Attempts</div>
-            <div class="stat-value" id="attempts">0</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-label">Range</div>
-            <div class="stat-value" id="range">1-100</div>
-          </div>
+        <div class="game-header">
+            <h1>GUESS THE NUMBER</h1>
+            <div class="creator">By Maruf</div>
+            <div class="settings">
+                <button id="soundToggle" class="icon-btn" title="Toggle Sound">🔊</button>
+                <button id="themeToggle" class="icon-btn" title="Toggle Theme">🌓</button>
+                <button id="leaderboardBtn" class="icon-btn" title="Leaderboard">🏆</button>
+            </div>
         </div>
 
-        <div class="feedback-area">
-          <div id="feedback" class="feedback"></div>
+        <div id="welcomeScreen" class="screen active">
+            <div class="difficulty-selector">
+                <h3>Select Difficulty</h3>
+                <div class="difficulty-buttons">
+                    <button class="difficulty-btn" data-difficulty="easy">
+                        <span class="diff-icon">🟢</span>
+                        <span class="diff-name">Easy</span>
+                        <span class="diff-range">1-50</span>
+                    </button>
+                    <button class="difficulty-btn active" data-difficulty="medium">
+                        <span class="diff-icon">🟡</span>
+                        <span class="diff-name">Medium</span>
+                        <span class="diff-range">1-100</span>
+                    </button>
+                    <button class="difficulty-btn" data-difficulty="hard">
+                        <span class="diff-icon">🔴</span>
+                        <span class="diff-name">Hard</span>
+                        <span class="diff-range">1-500</span>
+                    </button>
+                    <button class="difficulty-btn" data-difficulty="extreme">
+                        <span class="diff-icon">💀</span>
+                        <span class="diff-name">Extreme</span>
+                        <span class="diff-range">1-1000</span>
+                    </button>
+                </div>
+            </div>
+            <div class="range-display" id="welcomeRange">1 - 100</div>
+            <p class="instruction">I'm thinking of a number.<br>Can you guess it?</p>
+            <button id="startBtn" class="btn-primary">Start Game</button>
         </div>
 
-        <div class="input-area">
-          <input
-            type="number"
-            id="guessInput"
-            placeholder="Enter your guess"
-            min="1"
-            max="100"
-          />
-          <button id="guessBtn" class="btn-primary">Guess</button>
+        <div id="gameScreen" class="screen">
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-label">Attempts</div>
+                    <div class="stat-value" id="attempts">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Range</div>
+                    <div class="stat-value" id="range">1-100</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Hints</div>
+                    <div class="stat-value" id="hintsLeft">3</div>
+                </div>
+            </div>
+
+            <div class="feedback-area">
+                <div id="feedback" class="feedback"></div>
+            </div>
+
+            <div class="hint-section">
+                <button id="hintBtn" class="btn-hint">💡 Get Hint</button>
+                <div id="hintDisplay" class="hint-display"></div>
+            </div>
+
+            <div class="input-area">
+                <input type="number" id="guessInput" placeholder="Enter your guess" min="1" max="100">
+                <button id="guessBtn" class="btn-primary">Guess</button>
+            </div>
+
+            <div class="guess-history" id="guessHistory"></div>
+            
+            <button id="giveUpBtn" class="btn-secondary">Give Up</button>
         </div>
 
-        <div class="guess-history" id="guessHistory"></div>
-      </div>
+        <div id="winScreen" class="screen">
+            <div class="trophy">🏆</div>
+            <h2 class="win-title">Congratulations!</h2>
+            <p class="win-message" id="winMessage"></p>
+            <div class="score-display" id="scoreDisplay"></div>
+            <button id="playAgainBtn" class="btn-primary">Play Again</button>
+            <button id="changeDifficultyBtn" class="btn-secondary">Change Difficulty</button>
+        </div>
 
-      <div id="winScreen" class="screen">
-        <div class="trophy">🏆</div>
-        <h2 class="win-title">Congratulations!</h2>
-        <p class="win-message" id="winMessage"></p>
-        <button id="playAgainBtn" class="btn-primary">Play Again</button>
-      </div>
+        <div id="leaderboardScreen" class="screen">
+            <h2 class="leaderboard-title">🏆 Leaderboard</h2>
+            <div class="leaderboard-tabs">
+                <button class="tab-btn active" data-tab="easy">Easy</button>
+                <button class="tab-btn" data-tab="medium">Medium</button>
+                <button class="tab-btn" data-tab="hard">Hard</button>
+                <button class="tab-btn" data-tab="extreme">Extreme</button>
+            </div>
+            <div id="leaderboardContent" class="leaderboard-content"></div>
+            <button id="closeLeaderboardBtn" class="btn-secondary">Close</button>
+        </div>
     </div>
 
     <script src="script.js"></script>
-  </body>
+</body>
 </html>
