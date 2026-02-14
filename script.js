@@ -30,35 +30,35 @@ function startGame() {
   minRange = 1;
   maxRange = 100;
   guessHistory = [];
-  
+
   attemptsDisplay.textContent = '0';
   rangeDisplay.textContent = '1-100';
   feedbackDisplay.textContent = '';
   feedbackDisplay.className = 'feedback';
   guessHistoryDisplay.innerHTML = '';
   guessInput.value = '';
-  
+
   showScreen(gameScreen);
   guessInput.focus();
 }
 
 function makeGuess() {
   const userGuess = parseInt(guessInput.value);
-  
+
   if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
     showFeedback('Please enter a number between 1 and 100', 'error');
     return;
   }
-  
+
   if (guessHistory.includes(userGuess)) {
     showFeedback('You already guessed that number!', 'error');
     return;
   }
-  
+
   attempts++;
   attemptsDisplay.textContent = attempts;
   guessHistory.push(userGuess);
-  
+
   if (userGuess === randomNumber) {
     winGame();
   } else if (userGuess < randomNumber) {
@@ -70,7 +70,7 @@ function makeGuess() {
     showFeedback('📉 Too High! Go Lower', 'high');
     addGuessToHistory(userGuess, 'too-high');
   }
-  
+
   rangeDisplay.textContent = `${minRange}-${maxRange}`;
   guessInput.value = '';
   guessInput.focus();
@@ -99,7 +99,7 @@ function winGame() {
   } else {
     performance = 'You did it! Practice makes perfect! 💪';
   }
-  
+
   winMessage.innerHTML = `You found the number <strong>${randomNumber}</strong><br>in <strong>${attempts}</strong> ${attempts === 1 ? 'attempt' : 'attempts'}!<br><br>${performance}`;
   showScreen(winScreen);
 }
